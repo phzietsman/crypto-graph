@@ -1,0 +1,14 @@
+edge[interaction = "cc"] {
+	line-color: #FACD37;
+	opacity: 0.666;
+	z-index: 9;
+	width: 4;
+}
+
+node[NodeType = "Cheese"],
+node[NodeType = "CheeseType"] {
+	background-color: #FACD37;
+	text-outline-color: #FACD37;
+	width: mapData(Quality, 70, 100, 20, 50);
+	height: mapData(Quality, 70, 100, 20, 50);
+}

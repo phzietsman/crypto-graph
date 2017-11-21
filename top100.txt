@@ -4,34 +4,34 @@ Name            | Sym.  | Description
 -Bitcoin Cash    | BCH   | Bitcoin clone                            
 -Litecoin        | LTC   | Faster Bitcoin                           
 -Vertcoin        | VTC   | Bitcoin clone                            
-Decred          | DCR   | Bitcoin with alternative governance      
-ZenCash         | ZEN   | Privacy-focused Bitcoin clone            
-NAV Coin        | NAV   | Bitcoin with private transactions        
-Nexus           | NXS   | Bitcoin clone                            
-Bitdeal         | BDL   | Bitcoin clone                            
+-Decred          | DCR   | Bitcoin with alternative governance      
+-ZenCash         | ZEN   | Privacy-focused Bitcoin clone            
+-NAV Coin        | NAV   | Bitcoin with private transactions        
+-Nexus           | NXS   | Bitcoin clone                            
+-Bitdeal         | BDL   | Bitcoin clone                            
 
-Dogecoin        | DOGE  | Serious meme bitcoin clone               
-MonaCoin        | MONA  | Japanese Dogecoin
-Verge           | XVG   | Privacy Dogecoin                         
+-Dogecoin        | DOGE  | Serious meme bitcoin clone               
+-MonaCoin        | MONA  | Japanese Dogecoin
+-Verge           | XVG   | Privacy Dogecoin                         
 
-Dash            | DASH  | Privacy-focused Bitcoin clone            
-PIVX            | PIVX  | Inflationary Dash clone                  
+-Dash            | DASH  | Privacy-focused Bitcoin clone            
+-PIVX            | PIVX  | Inflationary Dash clone                  
 
 -Ethereum        | ETH   | Programmable contracts and money         
 -Ethereum Classic| ETC   | Ethereum clone                           
-NEO             | NEO   | Chinese-market Ethereum                  
+-NEO             | NEO   | Chinese-market Ethereum                  
 
+-Ripple          | XRP   | Enterprise payment settlement network    
 
 -IOTA            | MIOTA | Internet-of-things payments              
 
-Monero          | XMR   | Private digital cash                     
-Electroneum     | ETN   | Monero clone                             
+-Monero          | XMR   | Private digital cash                     
+-Electroneum     | ETN   | Monero clone                             
 
-ZCoin           | XZC   | Private digital cash                     
-BitcoinDark     | BTCD  | Zcoin clone                              
-SmartCash       | SMART | Zcoin clone with rewards                 
+-ZCoin           | XZC   | Private digital cash                     
+-BitcoinDark     | BTCD  | Zcoin clone                              
+-SmartCash       | SMART | Zcoin clone with rewards                 
 
-Ripple          | XRP   | Enterprise payment settlement network    
 NEM             | XEM   | Batteries-included digital assets        
 Qtum            | QTUM  | Ethereum contracts on Bitcoin            
 OmiseGO         | OMG   | Banking, remittance, and exchange        
