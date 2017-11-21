@@ -51,6 +51,14 @@ var cy = cytoscape({
       'target-arrow-color': '#ddd'
     })
 
+    .selector('edge[target = "priv"]')
+    .css({
+      'line-color': 'red',
+      'opacity': 0.333,
+      'z-index': 9,
+
+    })
+
     .selector('node[NodeType = "mining"]')
     .css({
       'content': 'data(name)',
