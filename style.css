@@ -1,0 +1,12 @@
+body { 
+  font-family: 'VT323', monospace;
+  font: 14px;
+}
+
+#cy {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}

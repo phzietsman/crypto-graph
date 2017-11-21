@@ -1,0 +1,110 @@
+Name            | Sym.  | Description                              
+----------------|-------|------------------------------------------
+-Bitcoin         | BTC   | Digital gold                             
+-Bitcoin Cash    | BCH   | Bitcoin clone                            
+-Litecoin        | LTC   | Faster Bitcoin                           
+-Vertcoin        | VTC   | Bitcoin clone                            
+Decred          | DCR   | Bitcoin with alternative governance      
+ZenCash         | ZEN   | Privacy-focused Bitcoin clone            
+NAV Coin        | NAV   | Bitcoin with private transactions        
+Nexus           | NXS   | Bitcoin clone                            
+Bitdeal         | BDL   | Bitcoin clone                            
+
+Dogecoin        | DOGE  | Serious meme bitcoin clone               
+MonaCoin        | MONA  | Japanese Dogecoin
+Verge           | XVG   | Privacy Dogecoin                         
+
+Dash            | DASH  | Privacy-focused Bitcoin clone            
+PIVX            | PIVX  | Inflationary Dash clone                  
+
+-Ethereum        | ETH   | Programmable contracts and money         
+-Ethereum Classic| ETC   | Ethereum clone                           
+NEO             | NEO   | Chinese-market Ethereum                  
+
+
+-IOTA            | MIOTA | Internet-of-things payments              
+
+Monero          | XMR   | Private digital cash                     
+Electroneum     | ETN   | Monero clone                             
+
+ZCoin           | XZC   | Private digital cash                     
+BitcoinDark     | BTCD  | Zcoin clone                              
+SmartCash       | SMART | Zcoin clone with rewards                 
+
+Ripple          | XRP   | Enterprise payment settlement network    
+NEM             | XEM   | Batteries-included digital assets        
+Qtum            | QTUM  | Ethereum contracts on Bitcoin            
+OmiseGO         | OMG   | Banking, remittance, and exchange        
+Zcash           | ZEC   | Private digital cash                     
+BitConnect      | BCC   | Madoff-like investment fund              
+Lisk            | LSK   | Decentralized applications in JavaScript 
+Cardano         | ADA   | Layered currency and contracts           
+Tether          | USDT  | Price = 1 USD                            
+Stellar Lumens  | XLM   | Digital IOUs                             
+EOS             | EOS   | Decentralized applications on WebAssembly
+Hshare          | HSR   | Blockchain switchboard                   
+Waves           | WAVES | Decentralized exchange and crowdfunding  
+Stratis         | STRAT | Decentralized applications in C#         
+Komodo          | KMD   | Decentralized ICOs                       
+Ark             | ARK   | Blockchain switchboard                   
+Bytecoin        | BCN   | Privacy-focused cryptocurrency           
+Steem           | STEEM | Reddit with money voting                 
+Ardor           | ARDR  | Blockchain for spawning blockchains      
+Binance Coin    | BNB   | Pay Binance exchange fees                
+Augur           | REP   | Decentralized prediction market          
+Populous        | PPT   | Invoice trading futures                  
+TenX            | PAY   | Cryptocurrency credit card               
+MaidSafeCoin    | MAID  | Rent disk space                          
+BitShares       | BTS   | Decentralized exchange                   
+Golem           | GNT   | Rent other people's computers            
+Gas             | GAS   | Pay fees on Neo                          
+TRON            | TRX   | In-app-purchases                         
+Factom          | FCT   | Decentralized record keeping             
+Basic Attention | BAT   | Decentralized ad network                 
+SALT            | SALT  | Cryptocurrency-backed loans              
+Kyber Network   | KNC   | Decentralized exchange                   
+DigixDAO        | DGD   | Organisation manages tokenized gold      
+Veritaseum      | VERI  | Vaporware                                
+Walton          | WTC   | IoT Blockchain                           
+SingularDTV     | SNGLS | Decentralized Netflix                    
+Bytom           | BTM   | Physical assets as tokens                
+Byteball Bytes  | GBYTE | Decentralized database and currency      
+GameCredits     | GAME  | Video game currency                      
+Metaverse ETP   | ETP   | Chinese Ethereum plus identity           
+GXShares        | GXS   | Decentralized Chinese Equifax            
+Syscoin         | SYS   | Decentralized marketplace                
+Siacoin         | SC    | Rent disk space                          
+Status          | SNT   | Decentralized application browser        
+0x              | ZRX   | Decentralized exchange                   
+Lykke           | LKK   | Digital asset exchange                   
+Civic           | CVC   | Identity and Authentication App          
+Blocknet        | BLOCK | Decentralized exchange                   
+Metal           | MTL   | Payments with rewards program            
+Iconomi         | ICN   | Digital asset investment funds           
+Aeternity       | AE    | Decentralized apps (prototype)           
+DigiByte        | DGB   | Faster Bitcoin                           
+Bancor          | BNT   | Token Index Funds                        
+Ripio Credit    | RCN   | Co-signed Cryptocurrency Loans           
+ATMChain        | ATM   | Advertising network                      
+Gnosis          | GNO   | Decentralized prediction market          
+VeChain         | VEN   | Supply chain item IDs                    
+Pura            | PURA  | Cryptocurrency                           
+Particl         | PART  | Privacy marketplace and chat             
+KuCoin Shares   | KCS   | Profit-sharing exchange fees             
+Bitquence       | BQX   | Mint for cryptocurrency investments      
+FunFair         | FUN   | Decentralized casino                     
+ChainLink       | LINK  | External data for contracts              
+Power Ledger    | POWR  | Airbnb for electricity                   
+Nxt             | NXT   | Cryptocurrency and marketplace           
+Monaco          | MCO   | Cryptocurrency credit card               
+Cryptonex       | CNX   | Zerocoin clone                           
+MCAP            | MCAP  | Mining investment fund                   
+Storj           | STORJ | Rent disk space                          
+Neblio          | NEBL  | Decentralized application platform       
+Zeusshield      | ZSC   | Decentralized insurance                  
+Streamr DATAcoin| DATA  | Real-time data marketplace               
+AdEx            | ADX   | Advertising exchange                     
+Open Trading    | OTN   | Decentralized exchange                   
+Loopring        | LRC   | Decentralized exchange                   
+Edgeless        | EDG   | Decentralized casino                     
+FairCoin        | FAIR  | Bitcoin that rewards savers
