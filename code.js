@@ -53,9 +53,17 @@ var cy = cytoscape({
       'target-arrow-color': '#ddd'
     })
 
-    .selector('edge[target = "priv"]')
+    .selector('edge[type = "priv"]')
     .css({
       'line-color': 'red',
+      'opacity': 0.333,
+      'z-index': 9,
+
+    })
+
+    .selector('edge[type = "consensus"]')
+    .css({
+      'line-color': 'green',
       'opacity': 0.333,
       'z-index': 9,
 
@@ -67,7 +75,7 @@ var cy = cytoscape({
       'color': 'magenta'
     })
 
-        .selector('node[NodeType = "focus_privacy"]')
+    .selector('node[NodeType = "focus_privacy"]')
     .css({
       'content': 'data(name)',
       'color': 'red'
@@ -135,11 +143,11 @@ var cy = cytoscape({
 
       { data: { id: 'xmr', name: 'monero' } },
       { data: { id: 'etn', name: 'electroneum' } },
-      
+
       { data: { id: 'xzc', name: 'zcoin' } },
       { data: { id: 'btcd', name: 'bitcoindark' } },
       { data: { id: 'smart', name: 'smartcash' } },
-      
+
 
 
       { data: { id: 'miota', name: 'iota' } },
@@ -148,17 +156,17 @@ var cy = cytoscape({
 
     edges: [
       // By consensus
-      { data: { id: 'pow_btc', weight: 1, target: 'pow', source: 'btc' } },
-      { data: { id: 'pow_eth', weight: 1, target: 'pow', source: 'eth' } },
-      { data: { id: 'pow_miota', weight: 1, target: 'pow', source: 'miota' } },
+      { data: { id: 'pow_btc', type:'consensus', weight: 1, target: 'pow', source: 'btc' } },
+      { data: { id: 'pow_eth', type:'consensus', weight: 1, target: 'pow', source: 'eth' } },
+      { data: { id: 'pow_miota', type:'consensus', weight: 1, target: 'pow', source: 'miota' } },
 
-      { data: { id: 'pos_eth', weight: 1, target: 'pos', source: 'eth' } },
+      { data: { id: 'pos_eth', type:'consensus', weight: 1, target: 'pos', source: 'eth' } },
 
 
       // By Mining
       { data: { id: 'asic_btc', weight: 1, target: 'asic', source: 'btc' } },
       { data: { id: 'gpu_eth', weight: 1, target: 'gpu', source: 'eth' } },
-      
+
       { data: { id: 'pre_miota', weight: 1, target: 'pre', source: 'miota' } },
       { data: { id: 'pre_xrp', weight: 1, target: 'pre', source: 'xrp' } },
 
@@ -187,19 +195,19 @@ var cy = cytoscape({
       { data: { id: 'xmr_etn', weight: 1, target: 'xmr', source: 'etn' } },
       { data: { id: 'xzc_btcd', weight: 1, target: 'xzc', source: 'btcd' } },
       { data: { id: 'xzc_smart', weight: 1, target: 'xzc', source: 'smart' } },
-      
+
 
 
 
       // Focus
       // Privacy
-      { data: { id: 'priv_zen', weight: 1, target: 'priv', source: 'zen' } },
-      { data: { id: 'priv_nav', weight: 1, target: 'priv', source: 'nav' } },
-      { data: { id: 'priv_xvg', weight: 1, target: 'priv', source: 'xvg' } },
-      { data: { id: 'priv_dash', weight: 1, target: 'priv', source: 'dash' } },
-      { data: { id: 'priv_xmr', weight: 1, target: 'priv', source: 'xmr' } },
-      { data: { id: 'priv_xzc', weight: 1, target: 'priv', source: 'xzc' } },
-      
+      { data: { id: 'priv_zen', type: 'priv', weight: 1, target: 'priv', source: 'zen' } },
+      { data: { id: 'priv_nav', type: 'priv', weight: 1, target: 'priv', source: 'nav' } },
+      { data: { id: 'priv_xvg', type: 'priv', weight: 1, target: 'priv', source: 'xvg' } },
+      { data: { id: 'priv_dash', type: 'priv', weight: 1, target: 'priv', source: 'dash' } },
+      { data: { id: 'priv_xmr', type: 'priv', weight: 1, target: 'priv', source: 'xmr' } },
+      { data: { id: 'priv_xzc', type: 'priv', weight: 1, target: 'priv', source: 'xzc' } },
+
 
 
     ]
