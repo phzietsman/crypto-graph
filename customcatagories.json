@@ -1,0 +1,47 @@
+{
+	"bitcoin": {
+		"type": "root_of",
+		"data": [
+			"bitcoin-cash",
+			"litecoin",
+			"vertcoin",
+			"decred",
+			"zencash",
+			"nav-coin",
+			"nexus",
+			"dash",
+			"dogecoin"
+		]
+	},
+	"dogecoin": {
+		"type": "root_of",
+		"data": [
+			"monacoin",
+			"verge"
+		]
+	},
+	"dash": {
+		"type": "root_of",
+		"data": [
+			"pivx"
+		]
+	},
+	"ethereum": {
+		"type": "root_of",
+		"data": [
+			"ethereum-classic",
+			"neo"
+		]
+	},
+	"privacy": {
+		"type": "privacy",
+		"data": [
+			"monero",
+			"pivx",
+			"zencash",
+			"nav-coin",
+			"dash",
+			"zcoin"
+		]
+	}
+}
