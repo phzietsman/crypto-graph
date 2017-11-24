@@ -33,7 +33,7 @@ edge {
         target-arrow-color: #ddd;
 }
 
-edge[type = "priv"] {
+edge[type = "privacy"] {
 	      line-color: red;
         opacity: 0.333;
         z-index: 9;
@@ -51,12 +51,18 @@ edge[type = "premined"] {
         z-index: 9;
 }
 
+edge[type = "root_of"] {
+        line-style: dashed;
+        opacity: 0.333;
+        z-index: 9;
+}
+
 node[type = "premined"] {
 	      content: data(name);
         color: magenta;
 }
 
-node[type = "focus_privacy"] {
+node[type = "privacy"] {
 	      content: data(name);
         color: red;
 }
