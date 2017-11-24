@@ -1,0 +1,21 @@
+var mergedObj = {
+
+24h_volume_usd:"3601850000.0",
+algorithm:"SHA256",
+available_supply:"16695075.0",
+id:"bitcoin",
+last_updated:"1511366651",
+market_cap_usd:"137294787425",
+max_supply:"21000000.0",
+name:"Bitcoin (BTC)",
+percent_change_1h:"0.18",
+percent_change_7d:"14.4",
+percent_change_24h:"-0.69",
+premined:"0",
+price_btc:"1.0",
+price_usd:"8223.67",
+proof_type:"PoW",
+rank:"1",
+symbol:"BTC",
+total_supply:"16695075.0",
+}

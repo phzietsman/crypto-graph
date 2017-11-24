@@ -1,14 +1,81 @@
-edge[interaction = "cc"] {
-	line-color: #FACD37;
-	opacity: 0.666;
-	z-index: 9;
-	width: 4;
+core {
+	      active-bg-color: #fff;
+        active-bg-opacity: 0.333;
 }
 
-node[NodeType = "Cheese"],
-node[NodeType = "CheeseType"] {
-	background-color: #FACD37;
-	text-outline-color: #FACD37;
-	width: mapData(Quality, 70, 100, 20, 50);
-	height: mapData(Quality, 70, 100, 20, 50);
+node {
+	      content: data(name);
+        color: midnightblue;
+        width: 40;
+        height: 40;
+        font-size: 10;
+        font-weight: bold;
+        min-zoomed-font-size: 4;
+        text-valign: center;
+        text-halign: center;
+        color: #000;
+        text-outline-width: 2;
+        text-outline-color: #fff;
+        text-outline-opacity: 1;
+        overlay-color: #fff;
+}
+
+edge {
+	    	curve-style: haystack;
+        haystack-radius: 0;
+        opacity: 0.333;
+        width: 2;
+        z-index: 0;
+        overlay-opacity: 0;
+        events: no;
+        target-arrow-shape: triangle;
+        line-color: #ddd;
+        target-arrow-color: #ddd;
+}
+
+edge[type = "privacy"] {
+	      line-color: red;
+        opacity: 0.333;
+        z-index: 9;
+}
+
+edge[type = "consensus"] {
+        line-color: green;
+        opacity: 0.333;
+        z-index: 9;
+}
+
+edge[type = "premined"] {
+	      line-color: magenta;
+        opacity: 0.333;
+        z-index: 9;
+}
+
+edge[type = "root_of"] {
+        line-style: dashed;
+        opacity: 0.333;
+        z-index: 9;
+}
+
+node[type = "premined"] {
+	      content: data(name);
+        color: magenta;
+}
+
+node[type = "privacy"] {
+	      content: data(name);
+        color: red;
+}
+
+node[type = "consensus"] {
+        content: data(name);
+        color: green;
+}
+
+.highlighted {
+        /* background-color: #61bffc;
+        line-color: #61bffc;
+        target-arrow-color: #61bffc;
+        transition-property: background-color; line-color; target-arrow-color;
+        transition-duration: 0.5s; */
 }
