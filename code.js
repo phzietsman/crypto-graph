@@ -138,6 +138,22 @@ $(function () {
       minZoom: 0.5,
       maxZoom: 4,
     });
+
+    function panIn(target) {
+      cy.animate({
+        fit: {
+          eles: target,
+          padding: 200
+        },
+        duration: 700,
+        easing: 'ease',
+        queue: true
+      });
+    }
+
+    cy.on('tap', function(evt){
+      panIn(evt.target);
+    });
   }
 
   function getProof(proof) {
