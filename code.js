@@ -13,6 +13,15 @@ $(function () {
     dataType: 'json'
   });
 
+  var cytoscapeStyles = $.ajax({
+    url: './style.cycss',
+    type: 'GET',
+    dataType: 'text'
+  });
+
+
+
+
 
   // Merged
   // 24h_volume_usd:"3601850000.0"
@@ -37,36 +46,12 @@ $(function () {
 
 
   // when both graph export json and style loaded, init cy
-  Promise.all([coinmarketcap, cryptocompare]).then(buildElements);
-
-  function initCy(elements) {
-
-    var cy = window.cy = cytoscape({
-      container: document.getElementById('cy'),
-
-      layout: {
-        name: 'cose',
-        directed: true,
-        roots: '#pos',
-        padding: 10
-      },
-
-      style: getCytoStyle(),
-      elements: elements,
-
-
-
-      boxSelectionEnabled: false,
-      autounselectify: true,
-      minZoom: 0.5,
-      maxZoom: 4,
-    });
-  }
-
+  Promise.all([coinmarketcap, cryptocompare, cytoscapeStyles]).then(buildElements);
 
   function buildElements(then) {
     var coinmarketcapData = then[0];
     var cryptocompareData = then[1].Data;
+    var styles = then[2];
 
 
 
@@ -135,11 +120,33 @@ $(function () {
     });
 
 
-    initCy(elements);
+    initCy(elements, styles);
 
   }
 
+  function initCy(elements, styles) {
 
+    var cy = window.cy = cytoscape({
+      container: document.getElementById('cy'),
+
+      layout: {
+        name: 'cose',
+        directed: true,
+        roots: '#pos',
+        padding: 10
+      },
+
+      style: styles,
+      elements: elements,
+
+
+
+      boxSelectionEnabled: false,
+      autounselectify: true,
+      minZoom: 0.5,
+      maxZoom: 4,
+    });
+  }
 
   function getProof(proof) {
 
@@ -156,110 +163,6 @@ $(function () {
       
     
     return proof;
-  }
-
-  function getCytoStyle() {
-    return cytoscape.stylesheet()
-
-      .selector('core')
-      .css({
-        'active-bg-color': '#fff',
-        'active-bg-opacity': '0.333'
-      })
-
-
-      .selector('node')
-      .css({
-        'content': 'data(name)',
-        'color': 'midnightblue',
-        'width': 40,
-        'height': 40,
-        'font-size': 10,
-        'font-weight': 'bold',
-        'min-zoomed-font-size': 4,
-
-        'text-valign': 'center',
-        'text-halign': 'center',
-        'color': '#000',
-        'text-outline-width': 2,
-        'text-outline-color': '#fff',
-        'text-outline-opacity': 1,
-        'overlay-color': '#fff'
-      })
-
-
-      .selector('edge')
-      .css({
-        'curve-style': 'haystack',
-        'haystack-radius': 0,
-
-        'opacity': 0.333,
-        'width': 2,
-
-        'z-index': 0,
-
-        'overlay-opacity': 0,
-        'events': 'no',
-
-        'target-arrow-shape': 'triangle',
-        'line-color': '#ddd',
-        'target-arrow-color': '#ddd'
-      })
-
-      .selector('edge[type = "priv"]')
-      .css({
-        'line-color': 'red',
-        'opacity': 0.333,
-        'z-index': 9,
-
-      })
-
-      .selector('edge[type = "consensus"]')
-      .css({
-        'line-color': 'green',
-        'opacity': 0.333,
-        'z-index': 9,
-
-      })
-
-      .selector('edge[type = "premined"]')
-      .css({
-        'line-color': 'magenta',
-        'opacity': 0.333,
-        'z-index': 9,
-
-      })
-
-      .selector('node[type = "premined"]')
-      .css({
-        'content': 'data(name)',
-        'color': 'magenta'
-      })
-
-      .selector('node[type = "focus_privacy"]')
-      .css({
-        'content': 'data(name)',
-        'color': 'red'
-      })
-
-
-
-      .selector('node[type = "consensus"]')
-      .css({
-        'content': 'data(name)',
-        'color': 'green'
-      })
-
-
-
-      .selector('.highlighted')
-      .css({
-        'background-color': '#61bffc',
-        'line-color': '#61bffc',
-        'target-arrow-color': '#61bffc',
-        'transition-property': 'background-color, line-color, target-arrow-color',
-        'transition-duration': '0.5s'
-      });
   }
 
   function mapMismatchedSymbols(symbol) {
