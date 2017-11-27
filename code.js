@@ -131,28 +131,42 @@ $(function () {
       style: styles,
       elements: elements,
 
-
-
       boxSelectionEnabled: false,
       autounselectify: true,
       minZoom: 0.5,
       maxZoom: 4,
     });
 
-    function panIn(target) {
-      cy.animate({
-        fit: {
-          eles: target,
-          padding: 200
+    function highlight(node) {
+      var nhood = node.closedNeighborhood();
+      var others = cy.elements().not( nhood );
+
+      others.addClass('hidden');
+      nhood.addClass('highlighted');
+
+      var l = nhood.makeLayout({
+        name: 'concentric',
+        fit: true,
+        animate: true,
+        animationDuration: 500,
+        animationEasing: 'linear',
+        avoidOverlap: true,
+        concentric: function( ele ){
+          if( ele.same( node ) ){
+            return 2;
+          } else {
+            return 1;
+          }
         },
-        duration: 700,
-        easing: 'ease',
-        queue: true
+        levelWidth: function(){ return 1; },
+        padding: 50
       });
+
+      l.run();
     }
 
     cy.on('tap', function(evt){
-      panIn(evt.target);
+      highlight(evt.target);
     });
   }
 
