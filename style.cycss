@@ -67,22 +67,27 @@ edge[type = "root_of"] {
 node[type = "premined"] {
 	      content: data(name);
         color: magenta;
+         background-color:magenta;
 }
 
 node[type = "privacy"] {
 	      content: data(name);
         color: red;
+        background-color:red;
 }
 
 node[type = "consensus"] {
         content: data(name);
         color: green;
+         background-color:green;
 }
 
 node[type = "crypto"] {
         text-valign: bottom;
         background-image: data(image_url);
         background-fit: cover cover;
+        width: data(dim);
+        height: data(dim);
 }
 
 .highlighted {
