@@ -14,11 +14,17 @@ $(function () {
   });
 
   var customcats = $.ajax({
-    url: './customcatagories.json', // all crytpos by cryptocompare
+    url: './customcatagories.json',
     type: 'GET',
     dataType: 'json'
   });
 
+  var erctokensUrl = "https://cors.io/?" + "https://eidoo.io/erc20-tokens-list/";
+  var erctokens = $.ajax({
+    url: erctokensUrl, // curated list of erc20 / 223 tokens
+    type: 'GET',
+    dataType: 'text'
+  });
 
   var cytoscapeStyles = $.ajax({
     url: './style.cycss',
@@ -28,13 +34,16 @@ $(function () {
 
 
   // when both graph export json and style loaded, init cy
-  Promise.all([coinmarketcap, cryptocompare, customcats,cytoscapeStyles]).then(buildElements);
+  Promise.all([cytoscapeStyles, coinmarketcap, cryptocompare, customcats, erctokens]).then(buildElements);
 
   function buildElements(then) {
-    var coinmarketcapData = then[0];
-    var cryptocompareData = then[1].Data;
-    var customcatsData = then[2];
-    var styles = then[3];
+    var styles = then[0];
+    var coinmarketcapData = then[1];
+    var cryptocompareData = then[2].Data;
+    var customcatsData = then[3];
+    var erctokensHTML = then[4];
+    var ERC20List = scrapeERCTokens(erctokensHTML);
+    
 
     var merged = coinmarketcapData.reduce( (acc,x) => {
 
@@ -49,6 +58,7 @@ $(function () {
       x.name = data ? data.FullName : "?";
       x.algorithm = data ? data.Algorithm : "?";
       x.proof_type = data ? data.ProofType : "?";
+      x.image_url = data ? `https://www.cryptocompare.com${data.ImageUrl}` : "https://cryptocoin.news/wp-content/uploads/2017/08/cropped-CC.png";
 
       acc.push({data:x});
       return acc;
@@ -75,8 +85,8 @@ $(function () {
     });
 
     elements.nodes.push({ data: { type: 'premined', id: 'premined', name: 'Pre Mined' } });
-
     elements.nodes.push({ data: { type: 'privacy', id: 'privacy', name: 'Privacy' } });
+    // elements.nodes.push({ data: { type: 'erc2x_token', id: 'erc2x_token', name: 'ERC20 Token' } });
 
 
     elements.nodes = elements.nodes.concat(merged);
@@ -84,8 +94,18 @@ $(function () {
     // Add Edges
     merged.forEach( x => {
 
+      var proofType = getProof(x.data.proof_type);
 
-      elements.edges.push({ data: { id: `${getProof(x.data.proof_type)}_${x.data.id}`, weight: 1, target: getProof(x.data.proof_type), source: x.data.id, type: "consensus" } });
+      if(proofType !== "None / Other") {
+        elements.edges.push({ data: { id: `${proofType}_${x.data.id}`, weight: 1, target: proofType, source: x.data.id, type: "consensus" } });
+      } else {
+
+        if(ERC20List.find( tok => tok === x.data.symbol)) {
+          elements.edges.push({ data: { id: `ethereum_${x.data.id}`, weight: 1, target: "ethereum", source: x.data.id, type: "erc2x_token" } });
+        } else {
+          elements.edges.push({ data: { id: `${proofType}_${x.data.id}`, weight: 1, target: proofType, source: x.data.id, type: "consensus" } });
+        }
+      }      
 
       // Link premined
       if(x.data.premined === "1") {
@@ -131,12 +151,42 @@ $(function () {
       style: styles,
       elements: elements,
 
-
-
       boxSelectionEnabled: false,
       autounselectify: true,
       minZoom: 0.5,
       maxZoom: 4,
+    });
+
+    function highlight(node) {
+      var nhood = node.closedNeighborhood();
+      var others = cy.elements().not( nhood );
+
+      others.addClass('hidden');
+      nhood.addClass('highlighted');
+
+      var l = nhood.makeLayout({
+        name: 'concentric',
+        fit: true,
+        animate: true,
+        animationDuration: 500,
+        animationEasing: 'linear',
+        avoidOverlap: true,
+        concentric: function( ele ){
+          if( ele.same( node ) ){
+            return 2;
+          } else {
+            return 1;
+          }
+        },
+        levelWidth: function(){ return 1; },
+        padding: 50
+      });
+
+      l.run();
+    }
+
+    cy.on('tap', function(evt){
+      highlight(evt.target);
     });
   }
 
@@ -158,6 +208,14 @@ $(function () {
 
     return "None / Other";
 
+  }
+
+  function scrapeERCTokens(html) {
+
+    var table = html.match(/<table id="tokensTable">([\w\W]*?)<\/table>/)[0];
+    var tokenElements = table.match(/<h4>([^\$][\w\W]*?)<\/h4>/g);
+    
+    return tokenElements.map( t => t.match(/\((.*)\)/)[1] );
   }
 
   function mapMismatchedSymbols(symbol) {
