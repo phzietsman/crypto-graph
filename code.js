@@ -158,8 +158,18 @@ $(function () {
     });
 
     function highlight(node) {
+
+      var allElements = cy.elements();
+
+      allElements.removeClass('hidden');
+      allElements.removeClass('highlighted');
+
+      if(!node.length){
+        return;
+      } 
+
       var nhood = node.closedNeighborhood();
-      var others = cy.elements().not( nhood );
+      var others = allElements.not( nhood );
 
       others.addClass('hidden');
       nhood.addClass('highlighted');
@@ -188,6 +198,7 @@ $(function () {
     cy.on('tap', function(evt){
       highlight(evt.target);
     });
+
   }
 
   function getProof(proof) {
