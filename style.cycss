@@ -4,7 +4,8 @@ core {
 }
 
 node {
-	      content: data(name);
+        content: data(name);
+        background: data(image_url);
         color: midnightblue;
         width: 40;
         height: 40;
@@ -37,6 +38,13 @@ edge[type = "privacy"] {
 	      line-color: red;
         opacity: 0.333;
         z-index: 9;
+}
+
+edge[type = "erc2x_token"] {
+        line-color: rgb(66, 66, 179);
+  line-style: dotted;
+  opacity: 0.333;
+  z-index: 9;
 }
 
 edge[type = "consensus"] {
