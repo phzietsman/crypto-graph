@@ -87,3 +87,30 @@ node[type = "consensus"] {
         transition-property: background-color; line-color; target-arrow-color;
         transition-duration: 0.5s; */
 }
+
+node.highlighted {
+	min-zoomed-font-size: 0;
+        z-index: 9999;
+}
+
+edge.highlighted {
+	opacity: 0.8;
+	width: 4;
+	z-index: 9999;
+}
+
+.faded {
+        events: no;
+}
+      
+node.faded {
+        opacity: 0.08;
+}
+      
+edge.faded {
+        opacity: 0.06;
+}
+      
+.hidden {
+        display: none;
+}
