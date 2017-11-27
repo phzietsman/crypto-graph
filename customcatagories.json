@@ -10,7 +10,14 @@
 			"nav-coin",
 			"nexus",
 			"dash",
-			"dogecoin"
+			"dogecoin",
+			"zcoin"
+		]
+	},
+	"zcoin": {
+		"type": "root_of",
+		"data": [
+			"bitcoindark"
 		]
 	},
 	"dogecoin": {
