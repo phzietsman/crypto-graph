@@ -43,13 +43,15 @@ $(function () {
     var customcatsData = then[3];
     var erctokensHTML = then[4];
     var ERC20List = scrapeERCTokens(erctokensHTML);
-    
 
-    var merged = coinmarketcapData.reduce( (acc,x) => {
+    var totalMarketCap = coinmarketcapData.reduce( (acc, el) => acc + Number(el.market_cap_usd) , 0 );
+
+
+    var merged = coinmarketcapData.reduce((acc, x) => {
 
       var data = cryptocompareData[mapMismatchedSymbols(x.symbol)];
 
-      if(!data) {
+      if (!data) {
         console.log('Missing data', x);
         return acc;
       }
@@ -58,29 +60,40 @@ $(function () {
       x.name = data ? data.FullName : "?";
       x.algorithm = data ? data.Algorithm : "?";
       x.proof_type = data ? data.ProofType : "?";
-      x.image_url = data ? `https://www.cryptocompare.com${data.ImageUrl}` : "https://cryptocoin.news/wp-content/uploads/2017/08/cropped-CC.png";
+      x.image_url = data ? `https://cors.io/?https://www.cryptocompare.com${data.ImageUrl}` : "https://cryptocoin.news/wp-content/uploads/2017/08/cropped-CC.png";
 
-      acc.push({data:x});
+      if(data) {
+        var mult = Math.log10(x.market_cap_usd  );
+        
+        x.dim = mult * 10 / 2; 
+      } else {
+        x.dim = 40;
+      }
+      
+      x.type = "crypto";
+
+      acc.push({ data: x });
+      console.log("DIM", x.dim);
       return acc;
 
     }, []);
 
     var proofs = ["PoW/PoS", "PoW", "PoS", "Tangle", "None / Other"];
 
-    var algorithms = merged.reduce( (acc, el) =>  { 
+    var algorithms = merged.reduce((acc, el) => {
       acc[el.data.algorithm] = el.data.algorithm;
-      return  acc;
+      return acc;
     }, {});
 
     console.log(merged);
 
     var elements = {
-      nodes : [],
+      nodes: [],
       edges: []
     };
 
     // Add default nodes
-    proofs.forEach( x => {
+    proofs.forEach(x => {
       elements.nodes.push({ data: { type: 'consensus', id: x, name: x } });
     });
 
@@ -92,39 +105,39 @@ $(function () {
     elements.nodes = elements.nodes.concat(merged);
 
     // Add Edges
-    merged.forEach( x => {
+    merged.forEach(x => {
 
       var proofType = getProof(x.data.proof_type);
 
-      if(proofType !== "None / Other") {
+      if (proofType !== "None / Other") {
         elements.edges.push({ data: { id: `${proofType}_${x.data.id}`, weight: 1, target: proofType, source: x.data.id, type: "consensus" } });
       } else {
 
-        if(ERC20List.find( tok => tok === x.data.symbol)) {
+        if (ERC20List.find(tok => tok === x.data.symbol)) {
           elements.edges.push({ data: { id: `ethereum_${x.data.id}`, weight: 1, target: "ethereum", source: x.data.id, type: "erc2x_token" } });
         } else {
           elements.edges.push({ data: { id: `${proofType}_${x.data.id}`, weight: 1, target: proofType, source: x.data.id, type: "consensus" } });
         }
-      }      
+      }
 
       // Link premined
-      if(x.data.premined === "1") {
-        elements.edges.push({ data: { id: `premined_${x.data.id}`, weight: 1, target: 'premined', source: x.data.id, type:"premined" } });
+      if (x.data.premined === "1") {
+        elements.edges.push({ data: { id: `premined_${x.data.id}`, weight: 1, target: 'premined', source: x.data.id, type: "premined" } });
       }
 
       // Link related coins
-      if(customcatsData[x.data.id]) {
+      if (customcatsData[x.data.id]) {
 
-        customcatsData[x.data.id].data.forEach( relationship => {
-          
-          elements.edges.push({ data: { id: `${x.data.id}_${relationship}`, weight: 1, target: x.data.id, source: relationship, type:"root_of" } });
+        customcatsData[x.data.id].data.forEach(relationship => {
+
+          elements.edges.push({ data: { id: `${x.data.id}_${relationship}`, weight: 1, target: x.data.id, source: relationship, type: "root_of" } });
 
         });
       }
 
       // Link privacy 
-      if(customcatsData.privacy.data.find( prv => prv === x.data.id)) {
-        elements.edges.push({ data: { id: `privacy_${x.data.id}`, weight: 1, target: "privacy", source: x.data.id, type:"privacy" } });        
+      if (customcatsData.privacy.data.find(prv => prv === x.data.id)) {
+        elements.edges.push({ data: { id: `privacy_${x.data.id}`, weight: 1, target: "privacy", source: x.data.id, type: "privacy" } });
       }
 
 
@@ -137,6 +150,9 @@ $(function () {
   }
 
   function initCy(elements, styles) {
+
+    var loading = document.getElementById('loading');
+    loading.classList.add('loaded');
 
     var cy = window.cy = cytoscape({
       container: document.getElementById('cy'),
@@ -158,8 +174,27 @@ $(function () {
     });
 
     function highlight(node) {
+
+      var allElements = cy.elements();
+
+      allElements.removeClass('hidden');
+      allElements.removeClass('highlighted');
+
+      if (!node.length) {
+        var resetLayout = allElements.makeLayout({
+          name: 'cose',
+          directed: true,
+          roots: '#pos',
+          padding: 10
+        });
+
+        resetLayout.run();
+
+        return;
+      }
+
       var nhood = node.closedNeighborhood();
-      var others = cy.elements().not( nhood );
+      var others = allElements.not(nhood);
 
       others.addClass('hidden');
       nhood.addClass('highlighted');
@@ -171,40 +206,68 @@ $(function () {
         animationDuration: 500,
         animationEasing: 'linear',
         avoidOverlap: true,
-        concentric: function( ele ){
-          if( ele.same( node ) ){
+        concentric: function (ele) {
+          if (ele.same(node)) {
             return 2;
           } else {
             return 1;
           }
         },
-        levelWidth: function(){ return 1; },
+        levelWidth: function () { return 1; },
         padding: 50
       });
 
       l.run();
     }
 
-    cy.on('tap', function(evt){
+    cy.on('tap', function (evt) {
+      
       highlight(evt.target);
+      hideNodeInfo();
+
     });
+
+    cy.on('tap', 'node[type="crypto"]',function (evt) {
+
+      if( evt.target.length ){
+        showNodeInfo( evt.target );
+      }
+
+    });
+
+    
   }
+
+  function showNodeInfo( node ){
+    $('#info').html( infoWidget( node.data() ) ).show();
+  }
+
+  function hideNodeInfo(){
+    $('#info').hide();
+  }
+
+  var infoWidget = Handlebars.compile(
+    `<script type="text/javascript" src="https://files.coinmarketcap.com/static/widget/currency.js"></script><div class="coinmarketcap-currency-widget" data-currency="{{id}}" data-base="USD" data-secondary="" data-ticker="true" data-rank="true" data-marketcap="true" data-volume="true" data-stats="USD" data-statsticker="false"></div>`
+  );
+
+
+
 
   function getProof(proof) {
 
     proof = proof.toUpperCase();
 
-    if(proof.includes("POW") && proof.includes("POS"))
-       return "PoW/PoS";
+    if (proof.includes("POW") && proof.includes("POS"))
+      return "PoW/PoS";
 
-    if(proof.includes("POW"))
-        return "PoW";
+    if (proof.includes("POW"))
+      return "PoW";
 
-    if(proof.includes("POS"))
-        return "PoS";
-    
-    if(proof.includes("TANGLE"))
-        return "Tangle";
+    if (proof.includes("POS"))
+      return "PoS";
+
+    if (proof.includes("TANGLE"))
+      return "Tangle";
 
     return "None / Other";
 
@@ -214,15 +277,15 @@ $(function () {
 
     var table = html.match(/<table id="tokensTable">([\w\W]*?)<\/table>/)[0];
     var tokenElements = table.match(/<h4>([^\$][\w\W]*?)<\/h4>/g);
-    
-    return tokenElements.map( t => t.match(/\((.*)\)/)[1] );
+
+    return tokenElements.map(t => t.match(/\((.*)\)/)[1]);
   }
 
   function mapMismatchedSymbols(symbol) {
-    if(symbol === "MIOTA")
+    if (symbol === "MIOTA")
       return "IOT";
 
-    if(symbol === "BCC")
+    if (symbol === "BCC")
       return "BCCOIN";
 
     return symbol;
