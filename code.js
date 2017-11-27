@@ -58,7 +58,9 @@ $(function () {
       x.name = data ? data.FullName : "?";
       x.algorithm = data ? data.Algorithm : "?";
       x.proof_type = data ? data.ProofType : "?";
-      x.image_url = data ? `https://www.cryptocompare.com${data.ImageUrl}` : "https://cryptocoin.news/wp-content/uploads/2017/08/cropped-CC.png";
+      x.image_url = data ? `https://cors.io/?https://www.cryptocompare.com${data.ImageUrl}` : "https://cryptocoin.news/wp-content/uploads/2017/08/cropped-CC.png";
+
+      x.type = "crypto";
 
       acc.push({ data: x });
       return acc;

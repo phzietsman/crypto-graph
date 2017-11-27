@@ -5,7 +5,6 @@ core {
 
 node {
         content: data(name);
-        background: data(image_url);
         color: midnightblue;
         width: 40;
         height: 40;
@@ -78,6 +77,12 @@ node[type = "privacy"] {
 node[type = "consensus"] {
         content: data(name);
         color: green;
+}
+
+node[type = "crypto"] {
+        text-valign: bottom;
+        background-image: data(image_url);
+        background-fit: cover cover;
 }
 
 .highlighted {
