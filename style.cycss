@@ -4,7 +4,7 @@ core {
 }
 
 node {
-	      content: data(name);
+        content: data(name);
         color: midnightblue;
         width: 40;
         height: 40;
@@ -39,6 +39,13 @@ edge[type = "privacy"] {
         z-index: 9;
 }
 
+edge[type = "erc2x_token"] {
+        line-color: rgb(66, 66, 179);
+  line-style: dotted;
+  opacity: 0.333;
+  z-index: 9;
+}
+
 edge[type = "consensus"] {
         line-color: green;
         opacity: 0.333;
@@ -70,6 +77,12 @@ node[type = "privacy"] {
 node[type = "consensus"] {
         content: data(name);
         color: green;
+}
+
+node[type = "crypto"] {
+        text-valign: bottom;
+        background-image: data(image_url);
+        background-fit: cover cover;
 }
 
 .highlighted {

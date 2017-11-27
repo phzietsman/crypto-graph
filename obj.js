@@ -1,6 +1,6 @@
 var mergedObj = {
 
-24h_volume_usd:"3601850000.0",
+"24h_volume_usd":"3601850000.0",
 algorithm:"SHA256",
 available_supply:"16695075.0",
 id:"bitcoin",
