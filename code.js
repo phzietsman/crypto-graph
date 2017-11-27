@@ -146,9 +146,7 @@ $(function () {
 
 
     });
-
-<<<<<<< Updated upstream
-=======
+    
     var layoutOptions ={
       name: 'concentric',
 
@@ -212,7 +210,6 @@ $(function () {
       padding: 50,
       spacingFactor: 2,
     };
->>>>>>> Stashed changes
 
     initCy(elements, styles);
 
