@@ -210,11 +210,36 @@ $(function () {
     }
 
     cy.on('tap', function (evt) {
+      
       highlight(evt.target);
+      hideNodeInfo();
+
+    });
+
+    cy.on('tap', 'node[type="crypto"]',function (evt) {
+
+      if( evt.target.length ){
+        showNodeInfo( evt.target );
+      }
+
     });
 
     
   }
+
+  function showNodeInfo( node ){
+    $('#info').html( infoTemplate( node.data() ) ).show();
+  }
+
+  function hideNodeInfo(){
+    $('#info').hide();
+  }
+
+  var infoTemplate = Handlebars.compile([
+    '<p class="info-name">{{name}}</p>',
+    '<p class="info-more"><a target="_blank" href="https://coinmarketcap.com/currencies/{{id}}/">More information</a></p>'
+  ].join(''));
+
 
   function getProof(proof) {
 
