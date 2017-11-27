@@ -228,17 +228,18 @@ $(function () {
   }
 
   function showNodeInfo( node ){
-    $('#info').html( infoTemplate( node.data() ) ).show();
+    $('#info').html( infoWidget( node.data() ) ).show();
   }
 
   function hideNodeInfo(){
     $('#info').hide();
   }
 
-  var infoTemplate = Handlebars.compile([
-    '<p class="info-name">{{name}}</p>',
-    '<p class="info-more"><a target="_blank" href="https://coinmarketcap.com/currencies/{{id}}/">More information</a></p>'
-  ].join(''));
+  var infoWidget = Handlebars.compile(
+    `<script type="text/javascript" src="https://files.coinmarketcap.com/static/widget/currency.js"></script><div class="coinmarketcap-currency-widget" data-currency="{{id}}" data-base="USD" data-secondary="" data-ticker="true" data-rank="true" data-marketcap="true" data-volume="true" data-stats="USD" data-statsticker="false"></div>`
+  );
+
+
 
 
   function getProof(proof) {

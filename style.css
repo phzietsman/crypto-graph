@@ -20,6 +20,8 @@ a {
   top: 0;
 }
 
+
+/* Loading section */
 #loading {
   position: absolute;
   left: 0;
@@ -33,31 +35,4 @@ a {
 
 #loading.loaded {
   display: none;
-}
-
-
-
-.info-name {
-  font: 14px;;
-}
-
-.info-more {
-  font: 10px;
-}
-
-#info {
-  position: absolute;
-  bottom: 0;
-}
-
-#info p {
-  margin: 0;
-}
-
-#linkout {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  margin: 0.25em;
-  z-index: 999;
 }
