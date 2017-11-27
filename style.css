@@ -36,3 +36,8 @@ a {
 #loading.loaded {
   display: none;
 }
+
+#info {
+  position: absolute; 
+  bottom: 0; 
+}
