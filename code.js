@@ -146,7 +146,7 @@ $(function () {
 
 
     });
-    
+
     var layoutOptions ={
       name: 'concentric',
 
@@ -211,11 +211,11 @@ $(function () {
       spacingFactor: 2,
     };
 
-    initCy(elements, styles);
+    initCy(elements, styles, layoutOptions);
 
   }
 
-  function initCy(elements, styles) {
+  function initCy(elements, styles, layoutOptions) {
 
     var loading = document.getElementById('loading');
     loading.classList.add('loaded');
@@ -223,19 +223,14 @@ $(function () {
     var cy = window.cy = cytoscape({
       container: document.getElementById('cy'),
 
-      layout: {
-        name: 'cose',
-        directed: true,
-        roots: '#pos',
-        padding: 10
-      },
+      layout: layoutOptions,
 
       style: styles,
       elements: elements,
 
       boxSelectionEnabled: false,
       autounselectify: true,
-      minZoom: 0.5,
+      minZoom: 0.3,
       maxZoom: 4,
     });
 
@@ -247,12 +242,7 @@ $(function () {
       allElements.removeClass('highlighted');
 
       if (!node.length) {
-        var resetLayout = allElements.makeLayout({
-          name: 'cose',
-          directed: true,
-          roots: '#pos',
-          padding: 10
-        });
+        var resetLayout = allElements.makeLayout(layoutOptions);
 
         resetLayout.run();
 
