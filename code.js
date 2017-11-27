@@ -47,6 +47,8 @@ $(function () {
     var erctokensHTML = then[4];
     var ERC20List = scrapeERCTokens(erctokensHTML);
 
+    var totalMarketCap = coinmarketcapData.reduce( (acc, el) => acc + Number(el.market_cap_usd) , 0 );
+
 
     var merged = coinmarketcapData.reduce((acc, x) => {
 
@@ -63,9 +65,18 @@ $(function () {
       x.proof_type = data ? data.ProofType : "?";
       x.image_url = data ? `https://cors.io/?https://www.cryptocompare.com${data.ImageUrl}` : "https://cryptocoin.news/wp-content/uploads/2017/08/cropped-CC.png";
 
+      if(data) {
+        var mult = Math.log10(x.market_cap_usd  );
+        
+        x.dim = mult * 10 / 2; 
+      } else {
+        x.dim = 40;
+      }
+      
       x.type = "crypto";
 
       acc.push({ data: x });
+      console.log("DIM", x.dim);
       return acc;
 
     }, []);
@@ -143,6 +154,9 @@ $(function () {
 
   function initCy(elements, styles) {
 
+    var loading = document.getElementById('loading');
+    loading.classList.add('loaded');
+
     var cy = window.cy = cytoscape({
       container: document.getElementById('cy'),
 
@@ -210,10 +224,37 @@ $(function () {
     }
 
     cy.on('tap', function (evt) {
+      
       highlight(evt.target);
+      hideNodeInfo();
+
     });
 
+    cy.on('tap', 'node[type="crypto"]',function (evt) {
+
+      if( evt.target.length ){
+        showNodeInfo( evt.target );
+      }
+
+    });
+
+    
   }
+
+  function showNodeInfo( node ){
+    $('#info').html( infoWidget( node.data() ) ).show();
+  }
+
+  function hideNodeInfo(){
+    $('#info').hide();
+  }
+
+  var infoWidget = Handlebars.compile(
+    `<script type="text/javascript" src="https://files.coinmarketcap.com/static/widget/currency.js"></script><div class="coinmarketcap-currency-widget" data-currency="{{id}}" data-base="USD" data-secondary="" data-ticker="true" data-rank="true" data-marketcap="true" data-volume="true" data-stats="USD" data-statsticker="false"></div>`
+  );
+
+
+
 
   function getProof(proof) {
 
