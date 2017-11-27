@@ -30,6 +30,9 @@ $(function () {
   // when both graph export json and style loaded, init cy
   Promise.all([coinmarketcap, cryptocompare, customcats,cytoscapeStyles]).then(buildElements);
 
+  var lastHighlighted = null;
+  var lastUnhighlighted = null;
+
   function buildElements(then) {
     var coinmarketcapData = then[0];
     var cryptocompareData = then[1].Data;
@@ -138,10 +141,13 @@ $(function () {
     });
 
     function highlight(node) {
-      var nhood = node.closedNeighborhood();
-      var others = cy.elements().not( nhood );
+      var oldNhood = lastHighlighted;
+
+      var nhood = lastHighlighted = node.closedNeighborhood();
+      var others = lastUnhighlighted = cy.elements().not( nhood );
 
       others.addClass('hidden');
+      nhood.removeClass('hidden');
       nhood.addClass('highlighted');
 
       var l = nhood.makeLayout({
@@ -165,8 +171,37 @@ $(function () {
       l.run();
     }
 
+    function clear() {
+      var allEles = cy.elements();
+
+      cy.batch(function(){
+        allEles.removeClass('hidden');
+        allEles.removeClass('highlighted');
+      });
+
+      var l = allEles.makeLayout({
+        name: 'cose',
+        fit: true,
+        animate: true,
+        animationDuration: 500,
+        animationEasing: 'linear',
+        avoidOverlap: true,
+        roots: '#pos',
+        padding: 10
+      });
+  
+      l.run();
+    }
+
     cy.on('tap', function(evt){
-      highlight(evt.target);
+      var target = evt.target;
+
+      if ( target === cy ){
+        clear();
+      }
+      else {
+        highlight(evt.target);
+      }
     });
   }
 
