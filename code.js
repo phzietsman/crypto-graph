@@ -140,6 +140,9 @@ $(function () {
 
   function initCy(elements, styles) {
 
+    var loading = document.getElementById('loading');
+    loading.classList.add('loaded');
+
     var cy = window.cy = cytoscape({
       container: document.getElementById('cy'),
 
@@ -210,6 +213,7 @@ $(function () {
       highlight(evt.target);
     });
 
+    
   }
 
   function getProof(proof) {

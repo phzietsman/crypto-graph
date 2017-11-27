@@ -20,4 +20,17 @@ a {
   top: 0;
 }
 
+#loading {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  text-align: center;
+  margin-top: -0.5em;
+  font-size: 2em;
+  color: #fff;
+}
 
+#loading.loaded {
+  display: none;
+}
