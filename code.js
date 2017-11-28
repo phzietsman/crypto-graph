@@ -19,8 +19,13 @@ $(function () {
     dataType: 'json'
   });
 
-  var erctokensUrl = "https://cors.io/?" + "https://eidoo.io/erc20-tokens-list/";
+  // var erctokensUrl = "https://cors.io/?" + "https://eidoo.io/erc20-tokens-list/";
+  // var erctokensUrl = "http://crossorigin.me/" + "https://eidoo.io/erc20-tokens-list/";
+  var erctokensUrl = "./eidoo.io";
+  // var erctokensUrl = "https://eidoo.io/erc20-tokens-list/";
+  
   var erctokens = $.ajax({
+    crossDomain: true,
     url: erctokensUrl, // curated list of erc20 / 223 tokens
     type: 'GET',
     dataType: 'text'
@@ -35,6 +40,9 @@ $(function () {
 
   // when both graph export json and style loaded, init cy
   Promise.all([cytoscapeStyles, coinmarketcap, cryptocompare, customcats, erctokens]).then(buildElements);
+
+  var lastHighlighted = null;
+  var lastUnhighlighted = null;
 
   function buildElements(then) {
     var styles = then[0];
@@ -60,7 +68,7 @@ $(function () {
       x.name = data ? data.FullName : "?";
       x.algorithm = data ? data.Algorithm : "?";
       x.proof_type = data ? data.ProofType : "?";
-      x.image_url = data ? `https://cors.io/?https://www.cryptocompare.com${data.ImageUrl}` : "https://cryptocoin.news/wp-content/uploads/2017/08/cropped-CC.png";
+      x.image_url = `./images/${x.symbol.toLowerCase()}.png`;
 
       if(data) {
         var mult = Math.log10(x.market_cap_usd  );
@@ -144,12 +152,75 @@ $(function () {
 
     });
 
+    var layoutOptions ={
+      name: 'concentric',
 
-    initCy(elements, styles);
+      fit: true,
+      animate: true,
+      animationDuration: 500,
+      animationEasing: 'linear',
+      avoidOverlap: true,
+      concentric: function (node) {
+        if (node.data("type") === 'consensus' || node.data("type") === 'privacy' || node.data("type") === 'premined')
+          return 11;
+        else {
+          var rank = node.data("rank");
+          var level = 0;
+          switch(true){
+            case rank <= 10:
+              level = 10;
+              break;
+
+            case rank <= 20:
+              level = 9;
+              break;
+
+            case rank <= 30:
+              level = 8;
+              break;
+
+            case rank <= 40:
+              level = 7;
+              break;
+            
+            case rank <= 50:
+              level = 6;
+              break;
+
+            case rank <= 60:
+              level = 5;
+              break;
+            
+            case rank <= 70:
+              level = 4;
+              break;
+
+            case rank <= 80:
+              level = 3;
+              break;
+
+            case rank <= 90:
+              level = 2;
+              break;
+            
+            case rank <= 100:
+              level = 1;
+              break;
+          }
+          
+          return level;
+        }
+      },
+      levelWidth: function () { return 1; },
+      padding: 50,
+      spacingFactor: 2,
+    };
+
+    initCy(elements, styles, layoutOptions);
 
   }
 
-  function initCy(elements, styles) {
+  function initCy(elements, styles, layoutOptions) {
 
     var loading = document.getElementById('loading');
     loading.classList.add('loaded');
@@ -157,19 +228,14 @@ $(function () {
     var cy = window.cy = cytoscape({
       container: document.getElementById('cy'),
 
-      layout: {
-        name: 'cose',
-        directed: true,
-        roots: '#pos',
-        padding: 10
-      },
+      layout: layoutOptions,
 
       style: styles,
       elements: elements,
 
       boxSelectionEnabled: false,
       autounselectify: true,
-      minZoom: 0.5,
+      minZoom: 0.3,
       maxZoom: 4,
     });
 
@@ -181,12 +247,7 @@ $(function () {
       allElements.removeClass('highlighted');
 
       if (!node.length) {
-        var resetLayout = allElements.makeLayout({
-          name: 'cose',
-          directed: true,
-          roots: '#pos',
-          padding: 10
-        });
+        var resetLayout = allElements.makeLayout(layoutOptions);
 
         resetLayout.run();
 
