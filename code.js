@@ -19,8 +19,13 @@ $(function () {
     dataType: 'json'
   });
 
-  var erctokensUrl = "https://cors.io/?" + "https://eidoo.io/erc20-tokens-list/";
+  // var erctokensUrl = "https://cors.io/?" + "https://eidoo.io/erc20-tokens-list/";
+  // var erctokensUrl = "http://crossorigin.me/" + "https://eidoo.io/erc20-tokens-list/";
+  var erctokensUrl = "./eidoo.io";
+  // var erctokensUrl = "https://eidoo.io/erc20-tokens-list/";
+  
   var erctokens = $.ajax({
+    crossDomain: true,
     url: erctokensUrl, // curated list of erc20 / 223 tokens
     type: 'GET',
     dataType: 'text'
@@ -63,7 +68,7 @@ $(function () {
       x.name = data ? data.FullName : "?";
       x.algorithm = data ? data.Algorithm : "?";
       x.proof_type = data ? data.ProofType : "?";
-      x.image_url = data ? `https://cors.io/?https://www.cryptocompare.com${data.ImageUrl}` : "https://cryptocoin.news/wp-content/uploads/2017/08/cropped-CC.png";
+      x.image_url = `./images/${x.symbol.toLowerCase()}.png`;
 
       if(data) {
         var mult = Math.log10(x.market_cap_usd  );
