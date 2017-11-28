@@ -276,7 +276,7 @@ $(function () {
         },
         levelWidth: function () { return 1; },
         padding: 50,
-        spacingFactor: 5,
+        spacingFactor: 3,
       });
 
       l.run();
