@@ -243,7 +243,7 @@ $(function () {
 
       var allElements = cy.elements();
 
-      allElements.removeClass('hidden');
+      allElements.removeClass('faded');
       allElements.removeClass('highlighted');
 
       if (!node.length) {
@@ -257,7 +257,7 @@ $(function () {
       var nhood = node.closedNeighborhood();
       var others = allElements.not(nhood);
 
-      others.addClass('hidden');
+      others.addClass('faded');
       nhood.addClass('highlighted');
 
       var l = nhood.makeLayout({
