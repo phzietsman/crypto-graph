@@ -230,7 +230,7 @@ $(function () {
 
       boxSelectionEnabled: false,
       autounselectify: true,
-      minZoom: 0.3,
+      minZoom: 0.1,
       maxZoom: 4,
     });
 
@@ -270,7 +270,8 @@ $(function () {
           }
         },
         levelWidth: function () { return 1; },
-        padding: 50
+        padding: 50,
+        spacingFactor: 5,
       });
 
       l.run();
