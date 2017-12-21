@@ -161,10 +161,10 @@ $(function () {
     nodeOverlap: 10,
   
     // Ideal edge (non nested) length
-    idealEdgeLength: function( edge ){ return 250; },
+    idealEdgeLength: function( edge ){ return 100; },
   
     // Divisor to compute edge forces
-    edgeElasticity: function( edge ){ return 100; },
+    edgeElasticity: function( edge ){ return 250; },
   
     // Nesting factor (multiplier) to compute ideal edge length for nested edges
     nestingFactor: 1.2,
