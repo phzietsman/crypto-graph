@@ -40,7 +40,7 @@ edge[type = "privacy"] {
 }
 
 edge[type = "erc2x_token"] {
-        line-color: rgb(66, 66, 179);
+        line-color: white;
         line-style: dotted;
         opacity: 0.333;
         z-index: 9;
