@@ -158,7 +158,7 @@ $(function () {
     nodeRepulsion: function( node ){ return 400000; },
   
     // Node repulsion (overlapping) multiplier
-    nodeOverlap: 4,
+    nodeOverlap: 10,
   
     // Ideal edge (non nested) length
     idealEdgeLength: function( edge ){ return 250; },
@@ -319,8 +319,10 @@ $(function () {
 
     if (!node.length) {
 
-      var resetLayout = allElements.makeLayout(layoutOptions);
-      resetLayout.run();
+      cy.json(layoutMemory);
+
+      // var resetLayout = allElements.makeLayout(layoutOptions);
+      // resetLayout.run();
 
       
       return;
@@ -376,7 +378,7 @@ $(function () {
     var layout = cy.layout(layoutOptions);
     
     layout.on('layoutstop', function( event ){
-      console.log('layoutstop promise fulfilled');
+      layoutMemory = cy.json();
     });
 
     layout.run();
