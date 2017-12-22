@@ -19,16 +19,11 @@ $(function () {
     dataType: 'json'
   });
 
-  // var erctokensUrl = "https://cors.io/?" + "https://eidoo.io/erc20-tokens-list/";
-  // var erctokensUrl = "http://crossorigin.me/" + "https://eidoo.io/erc20-tokens-list/";
-  var erctokensUrl = "./eidoo.io";
-  // var erctokensUrl = "https://eidoo.io/erc20-tokens-list/";
-
   var erctokens = $.ajax({
     crossDomain: true,
-    url: erctokensUrl, // curated list of erc20 / 223 tokens
+    url: "https://us-central1-crypto-graph.cloudfunctions.net/token-list",
     type: 'GET',
-    dataType: 'text'
+    dataType: 'json'
   });
 
   var cytoscapeStyles = $.ajax({
@@ -202,8 +197,7 @@ $(function () {
     var coinmarketcapData = then[1];
     var cryptocompareData = then[2].Data;
     var customcatsData = then[3];
-    var erctokensHTML = then[4];
-    var ERC20List = scrapeERCTokens(erctokensHTML);
+    var ERC20List = then[4];
 
     var totalMarketCap = coinmarketcapData.reduce((acc, el) => acc + Number(el.market_cap_usd), 0);
 
@@ -275,7 +269,7 @@ $(function () {
         elements.edges.push({ data: { id: `${proofType}_${x.data.id}`, weight: 1, target: proofType, source: x.data.id, type: "consensus" } });
       } else {
 
-        if (ERC20List.find(tok => tok === x.data.symbol)) {
+        if (ERC20List.find(tok => tok.symbol === x.data.symbol && tok.platform === "Ethereum")) {
           elements.edges.push({ data: { id: `ethereum_${x.data.id}`, weight: 1, target: "ethereum", source: x.data.id, type: "erc2x_token" } });
         } else {
           elements.edges.push({ data: { id: `${proofType}_${x.data.id}`, weight: 1, target: proofType, source: x.data.id, type: "consensus" } });
@@ -431,14 +425,6 @@ $(function () {
 
     return "None / Other";
 
-  }
-
-  function scrapeERCTokens(html) {
-
-    var table = html.match(/<table id="tokensTable">([\w\W]*?)<\/table>/)[0];
-    var tokenElements = table.match(/<h4>([^\$][\w\W]*?)<\/h4>/g);
-
-    return tokenElements.map(t => t.match(/\((.*)\)/)[1]);
   }
 
   function mapMismatchedSymbols(symbol) {
